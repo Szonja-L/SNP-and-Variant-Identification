@@ -1,4 +1,4 @@
-# 🧬 SNP & Variant Identification in *E. coli* — NGS Pipeline Portfolio Project
+# 🧬 SNP & Variant Identification in *E. coli* :  NGS Pipeline Portfolio Project
 
 [![Python](https://img.shields.io/badge/Python-3.9+-3776AB?logo=python&logoColor=white)](https://python.org)
 [![Galaxy](https://img.shields.io/badge/Galaxy-usegalaxy.eu-2D9BF0?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NSIgZmlsbD0id2hpdGUiLz48L3N2Zz4=)](https://usegalaxy.eu)
@@ -252,4 +252,4 @@ python scripts/variant_analysis_pipeline.py \
 
 ---
 
-*Szonja Fekete · Bioinformatics Portfolio · 2024*
+*Szonja Lippert · Bioinformatics Portfolio · 2024*
