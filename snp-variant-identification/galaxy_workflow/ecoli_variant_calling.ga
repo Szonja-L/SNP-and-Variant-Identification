@@ -1,0 +1,354 @@
+{
+  "a_galaxy_workflow": "true",
+  "annotation": "SNP & Variant Identification pipeline for bacterial genomes. Aligns Illumina paired-end reads to a reference genome and calls variants using FreeBayes, with SnpEff annotation. Designed for E. coli (or any bacterial genome on NCBI). Portfolio project — Szonja Fekete, 2024.",
+  "creator": [
+    {
+      "class": "Person",
+      "identifier": "https://github.com/szfekete",
+      "name": "Szonja Fekete"
+    }
+  ],
+  "format-version": "0.1",
+  "license": "MIT",
+  "name": "Bacterial SNP & Variant Identification (FastQC → Trimmomatic → BWA-MEM → FreeBayes → SnpEff)",
+  "steps": {
+    "0": {
+      "annotation": "Upload paired-end FASTQ files (R1 and R2) from your bacterial isolate. For this project: EC_UTI_2023_001_R1.fastq.gz and EC_UTI_2023_001_R2.fastq.gz",
+      "content_id": null,
+      "errors": null,
+      "id": 0,
+      "input_connections": {},
+      "label": "FASTQ_R1 (forward reads)",
+      "outputs": [],
+      "position": {"left": 0, "top": 0},
+      "tool_id": null,
+      "tool_state": "{\"optional\": false, \"tag\": null}",
+      "tool_version": null,
+      "type": "data_input",
+      "uuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "workflow_outputs": []
+    },
+    "1": {
+      "annotation": "Upload the reverse FASTQ read file (R2)",
+      "content_id": null,
+      "errors": null,
+      "id": 1,
+      "input_connections": {},
+      "label": "FASTQ_R2 (reverse reads)",
+      "outputs": [],
+      "position": {"left": 0, "top": 120},
+      "tool_id": null,
+      "tool_state": "{\"optional\": false, \"tag\": null}",
+      "tool_version": null,
+      "type": "data_input",
+      "uuid": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "workflow_outputs": []
+    },
+    "2": {
+      "annotation": "Upload the reference genome FASTA file. For this project: NC_000913.3 (E. coli K-12 MG1655). Download from: https://www.ncbi.nlm.nih.gov/nuccore/NC_000913.3",
+      "content_id": null,
+      "errors": null,
+      "id": 2,
+      "input_connections": {},
+      "label": "Reference Genome FASTA (NC_000913.3)",
+      "outputs": [],
+      "position": {"left": 0, "top": 240},
+      "tool_id": null,
+      "tool_state": "{\"optional\": false, \"tag\": null}",
+      "tool_version": null,
+      "type": "data_input",
+      "uuid": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+      "workflow_outputs": []
+    },
+    "3": {
+      "annotation": "STEP 1: Quality control on raw reads. Run FastQC on both R1 and R2 files to assess base quality scores, adapter content, GC distribution, and sequence duplication. Check for Q30 > 80% and flag any adapter contamination.",
+      "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.74+galaxy0",
+      "errors": null,
+      "id": 3,
+      "input_connections": {
+        "input_file": {"id": 0, "output_name": "output"}
+      },
+      "label": "FastQC — Raw R1",
+      "outputs": [
+        {"label": "HTML Report", "output_name": "html_file"},
+        {"label": "Text Data",   "output_name": "text_file"}
+      ],
+      "position": {"left": 260, "top": 0},
+      "post_job_actions": {},
+      "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.74+galaxy0",
+      "tool_state": "{\"input_file\": null, \"contaminants\": null, \"limits\": null, \"min_length\": null, \"nogroup\": false, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+      "tool_version": "0.74+galaxy0",
+      "type": "tool",
+      "uuid": "d4e5f6a7-b8c9-0123-defa-234567890123",
+      "workflow_outputs": [{"label": "fastqc_r1_html", "output_name": "html_file", "uuid": "e5f6a7b8-c9d0-1234-efab-345678901234"}]
+    },
+    "4": {
+      "annotation": "STEP 1b: FastQC on reverse reads (R2)",
+      "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.74+galaxy0",
+      "errors": null,
+      "id": 4,
+      "input_connections": {
+        "input_file": {"id": 1, "output_name": "output"}
+      },
+      "label": "FastQC — Raw R2",
+      "outputs": [
+        {"label": "HTML Report", "output_name": "html_file"},
+        {"label": "Text Data",   "output_name": "text_file"}
+      ],
+      "position": {"left": 260, "top": 120},
+      "post_job_actions": {},
+      "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.74+galaxy0",
+      "tool_state": "{\"input_file\": null, \"contaminants\": null, \"limits\": null, \"min_length\": null, \"nogroup\": false, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+      "tool_version": "0.74+galaxy0",
+      "type": "tool",
+      "uuid": "f6a7b8c9-d0e1-2345-fabc-456789012345",
+      "workflow_outputs": []
+    },
+    "5": {
+      "annotation": "STEP 2: Adapter trimming and quality filtering with Trimmomatic. Settings: ILLUMINACLIP (TruSeq3-PE adapters), LEADING:3, TRAILING:3, SLIDINGWINDOW:4:15, MINLEN:36. This removes adapter contamination and low-quality bases.",
+      "content_id": "toolshed.g2.bx.psu.edu/repos/pjbriggs/trimmomatic/trimmomatic/0.39+galaxy0",
+      "errors": null,
+      "id": 5,
+      "input_connections": {
+        "readtype|fastq_r1_in": {"id": 0, "output_name": "output"},
+        "readtype|fastq_r2_in": {"id": 1, "output_name": "output"}
+      },
+      "label": "Trimmomatic — Adapter Trimming",
+      "outputs": [
+        {"label": "R1 Paired",   "output_name": "fastq_out_r1_paired"},
+        {"label": "R2 Paired",   "output_name": "fastq_out_r2_paired"},
+        {"label": "R1 Unpaired", "output_name": "fastq_out_r1_unpaired"},
+        {"label": "R2 Unpaired", "output_name": "fastq_out_r2_unpaired"}
+      ],
+      "position": {"left": 520, "top": 60},
+      "post_job_actions": {},
+      "tool_id": "toolshed.g2.bx.psu.edu/repos/pjbriggs/trimmomatic/trimmomatic/0.39+galaxy0",
+      "tool_state": "{\"readtype\": {\"single_or_paired\": \"pair_of_files\", \"fastq_r1_in\": null, \"fastq_r2_in\": null}, \"illuminaclip\": {\"do_illuminaclip\": true, \"adapter_type\": \"TruSeq3-PE\", \"seed_mismatches\": 2, \"palindrome_clip_threshold\": 30, \"simple_clip_threshold\": 10}, \"operations\": [{\"operation\": {\"name\": \"LEADING\", \"leading\": 3}}, {\"operation\": {\"name\": \"TRAILING\", \"trailing\": 3}}, {\"operation\": {\"name\": \"SLIDINGWINDOW\", \"window_size\": 4, \"required_quality\": 15}}, {\"operation\": {\"name\": \"MINLEN\", \"minlen\": 36}}], \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+      "tool_version": "0.39+galaxy0",
+      "type": "tool",
+      "uuid": "a7b8c9d0-e1f2-3456-abcd-567890123456",
+      "workflow_outputs": []
+    },
+    "6": {
+      "annotation": "STEP 2b: FastQC on trimmed reads to verify quality improvement. Confirm Q30 > 90% and no residual adapter sequences.",
+      "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.74+galaxy0",
+      "errors": null,
+      "id": 6,
+      "input_connections": {
+        "input_file": {"id": 5, "output_name": "fastq_out_r1_paired"}
+      },
+      "label": "FastQC — Trimmed R1 (QC check)",
+      "outputs": [
+        {"label": "HTML Report", "output_name": "html_file"}
+      ],
+      "position": {"left": 780, "top": 0},
+      "post_job_actions": {},
+      "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.74+galaxy0",
+      "tool_state": "{\"input_file\": null, \"nogroup\": false, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+      "tool_version": "0.74+galaxy0",
+      "type": "tool",
+      "uuid": "b8c9d0e1-f2a3-4567-bcde-678901234567",
+      "workflow_outputs": []
+    },
+    "7": {
+      "annotation": "STEP 3: Index the reference genome for BWA alignment. Required before mapping. This creates .bwt, .pac, .ann, .amb, .sa index files for the K-12 MG1655 reference.",
+      "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/bwa/bwa_index/0.7.17.5",
+      "errors": null,
+      "id": 7,
+      "input_connections": {
+        "reference_source|ref_file": {"id": 2, "output_name": "output"}
+      },
+      "label": "BWA Index — Reference Genome",
+      "outputs": [
+        {"label": "BWA Index",  "output_name": "index"}
+      ],
+      "position": {"left": 780, "top": 240},
+      "post_job_actions": {},
+      "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/bwa/bwa_index/0.7.17.5",
+      "tool_state": "{\"reference_source\": {\"reference_source_selector\": \"history\", \"ref_file\": null}}",
+      "tool_version": "0.7.17.5",
+      "type": "tool",
+      "uuid": "c9d0e1f2-a3b4-5678-cdef-789012345678",
+      "workflow_outputs": []
+    },
+    "8": {
+      "annotation": "STEP 4: Align trimmed paired-end reads to the reference genome using BWA-MEM. Parameters: -M (mark shorter split hits as secondary), -R (add read group info for variant calling). Output: unsorted SAM/BAM file.",
+      "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/bwa/bwa_mem/0.7.17.2",
+      "errors": null,
+      "id": 8,
+      "input_connections": {
+        "reference_source|index": {"id": 7, "output_name": "index"},
+        "fastq_input|fastq_input1": {"id": 5, "output_name": "fastq_out_r1_paired"},
+        "fastq_input|fastq_input2": {"id": 5, "output_name": "fastq_out_r2_paired"}
+      },
+      "label": "BWA-MEM — Paired-End Alignment",
+      "outputs": [
+        {"label": "BAM Alignment", "output_name": "bam_output"}
+      ],
+      "position": {"left": 1040, "top": 150},
+      "post_job_actions": {},
+      "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/bwa/bwa_mem/0.7.17.2",
+      "tool_state": "{\"reference_source\": {\"reference_source_selector\": \"history\", \"index\": null}, \"fastq_input\": {\"fastq_input_selector\": \"paired\", \"fastq_input1\": null, \"fastq_input2\": null}, \"read_group\": {\"ID\": \"EC_UTI_2023_001\", \"SM\": \"EC_UTI_2023_001\", \"PL\": \"ILLUMINA\", \"LB\": \"Lib001\", \"PU\": \"NovaSeq6000.Run001\"}, \"parameter_settings\": {\"settings\": \"full\", \"A\": 1, \"B\": 4, \"O\": [6, 6], \"E\": [1, 1], \"L\": [5, 5], \"U\": 17, \"M\": true, \"T\": 30, \"c\": 10000}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+      "tool_version": "0.7.17.2",
+      "type": "tool",
+      "uuid": "d0e1f2a3-b4c5-6789-defa-890123456789",
+      "workflow_outputs": []
+    },
+    "9": {
+      "annotation": "STEP 5a: Sort the BAM file by coordinate position. Required for downstream tools (SAMtools markdup, FreeBayes).",
+      "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/samtools_sort/samtools_sort/2.0.4",
+      "errors": null,
+      "id": 9,
+      "input_connections": {
+        "input1": {"id": 8, "output_name": "bam_output"}
+      },
+      "label": "SAMtools Sort",
+      "outputs": [
+        {"label": "Sorted BAM", "output_name": "output1"}
+      ],
+      "position": {"left": 1300, "top": 100},
+      "post_job_actions": {},
+      "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/samtools_sort/samtools_sort/2.0.4",
+      "tool_state": "{\"input1\": null, \"sort_by\": \"coordinate\", \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+      "tool_version": "2.0.4",
+      "type": "tool",
+      "uuid": "e1f2a3b4-c5d6-7890-efab-901234567890",
+      "workflow_outputs": []
+    },
+    "10": {
+      "annotation": "STEP 5b: Mark PCR duplicates with SAMtools markdup to reduce false variant calls from amplification bias.",
+      "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/samtools_markdup/samtools_markdup/1.18+galaxy0",
+      "errors": null,
+      "id": 10,
+      "input_connections": {
+        "input_file": {"id": 9, "output_name": "output1"}
+      },
+      "label": "SAMtools Markdup — Remove PCR Duplicates",
+      "outputs": [
+        {"label": "Deduped BAM", "output_name": "output_file"}
+      ],
+      "position": {"left": 1560, "top": 100},
+      "post_job_actions": {},
+      "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/samtools_markdup/samtools_markdup/1.18+galaxy0",
+      "tool_state": "{\"input_file\": null, \"remove_duplicates\": false, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+      "tool_version": "1.18+galaxy0",
+      "type": "tool",
+      "uuid": "f2a3b4c5-d6e7-8901-fabc-012345678901",
+      "workflow_outputs": []
+    },
+    "11": {
+      "annotation": "STEP 5c: Get alignment statistics. Review mapping rate (target > 95%), properly paired %, and insert size distribution. Export flagstat output for the report.",
+      "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/samtools_flagstat/samtools_flagstat/2.0.4",
+      "errors": null,
+      "id": 11,
+      "input_connections": {
+        "input1": {"id": 10, "output_name": "output_file"}
+      },
+      "label": "SAMtools Flagstat — Alignment Statistics",
+      "outputs": [
+        {"label": "Flagstat Report", "output_name": "output1"}
+      ],
+      "position": {"left": 1820, "top": 0},
+      "post_job_actions": {},
+      "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/samtools_flagstat/samtools_flagstat/2.0.4",
+      "tool_state": "{\"input1\": null, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+      "tool_version": "2.0.4",
+      "type": "tool",
+      "uuid": "a3b4c5d6-e7f8-9012-abcd-123456789012",
+      "workflow_outputs": [{"label": "flagstat_output", "output_name": "output1", "uuid": "b4c5d6e7-f8a9-0123-bcde-234567890123"}]
+    },
+    "12": {
+      "annotation": "STEP 5d: Calculate per-base coverage depth across the genome (5 kb windows). Used to assess uniform coverage and identify any gaps. Required for reliable variant calling.",
+      "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/bedtools/bedtools_genomecoverage/2.31.0+galaxy0",
+      "errors": null,
+      "id": 12,
+      "input_connections": {
+        "input": {"id": 10, "output_name": "output_file"}
+      },
+      "label": "BEDtools genomeCoverage — Depth per Window",
+      "outputs": [
+        {"label": "Coverage Histogram", "output_name": "output"}
+      ],
+      "position": {"left": 1820, "top": 160},
+      "post_job_actions": {},
+      "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/bedtools/bedtools_genomecoverage/2.31.0+galaxy0",
+      "tool_state": "{\"input\": null, \"depth\": \"-d\", \"genome_file_opts\": {\"genome_file_opts_selector\": \"hist\"}, \"split\": false, \"strand\": \"\", \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+      "tool_version": "2.31.0+galaxy0",
+      "type": "tool",
+      "uuid": "c5d6e7f8-a9b0-1234-cdef-345678901234",
+      "workflow_outputs": []
+    },
+    "13": {
+      "annotation": "STEP 6: Call SNPs and small indels using FreeBayes (haplotype-based Bayesian variant caller). Key settings: --min-mapping-quality 20, --min-base-quality 20, --min-alternate-fraction 0.05, --min-alternate-count 3. For clonal bacteria, expect AF close to 1.0.",
+      "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/freebayes/freebayes/1.3.6+galaxy0",
+      "errors": null,
+      "id": 13,
+      "input_connections": {
+        "reference_source|bam_input": {"id": 10, "output_name": "output_file"},
+        "reference_source|ref_file":  {"id": 2,  "output_name": "output"}
+      },
+      "label": "FreeBayes — Variant Calling",
+      "outputs": [
+        {"label": "VCF output", "output_name": "output_vcf"}
+      ],
+      "position": {"left": 1820, "top": 320},
+      "post_job_actions": {},
+      "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/freebayes/freebayes/1.3.6+galaxy0",
+      "tool_state": "{\"reference_source\": {\"reference_source_selector\": \"history\", \"bam_input\": null, \"ref_file\": null}, \"options_type\": {\"options_type_selector\": \"advanced\", \"min_mapping_quality\": 20, \"min_base_quality\": 20, \"mismatch_base_quality_threshold\": 10, \"read_mismatch_limit\": null, \"read_max_mismatch_fraction\": 1.0, \"read_snp_limit\": null, \"read_indel_limit\": null, \"min_alternate_fraction\": 0.05, \"min_alternate_count\": 3, \"min_alternate_qsum\": 0, \"min_coverage\": 5, \"genotyping_max_iterations\": 1000, \"genotyping_max_banddepth\": 6, \"posterior_integration_limits\": \"1,3\", \"ploidy\": 1, \"haplotype_length\": -1}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+      "tool_version": "1.3.6+galaxy0",
+      "type": "tool",
+      "uuid": "d6e7f8a9-b0c1-2345-defa-456789012345",
+      "workflow_outputs": []
+    },
+    "14": {
+      "annotation": "STEP 7a: Filter VCF to retain only high-quality variants: QUAL >= 200, DP >= 10, AF >= 0.90. This removes low-confidence calls and retains fixed or near-fixed mutations consistent with clonal bacterial genomes.",
+      "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/vcffilter/vcffilter2/1.0.0_rc3+galaxy3",
+      "errors": null,
+      "id": 14,
+      "input_connections": {
+        "input1": {"id": 13, "output_name": "output_vcf"}
+      },
+      "label": "VCFfilter — Quality Filter (QUAL ≥ 200, AF ≥ 0.90)",
+      "outputs": [
+        {"label": "Filtered VCF", "output_name": "out_file1"}
+      ],
+      "position": {"left": 2080, "top": 260},
+      "post_job_actions": {},
+      "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/vcffilter/vcffilter2/1.0.0_rc3+galaxy3",
+      "tool_state": "{\"input1\": null, \"filter_type\": \"s\", \"filter_expr\": \"QUAL > 200 & DP > 10\", \"invert\": false, \"tag_pass\": false, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+      "tool_version": "1.0.0_rc3+galaxy3",
+      "type": "tool",
+      "uuid": "e7f8a9b0-c1d2-3456-efab-567890123456",
+      "workflow_outputs": []
+    },
+    "15": {
+      "annotation": "STEP 7b: Annotate variants with SnpEff using the E. coli K-12 MG1655 database. SnpEff predicts the functional effect of each variant: synonymous, missense, stop-gained, splice site, UTR, intergenic, etc. Also reports HGVS notation and affected gene names.",
+      "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/snpeff/snpEff/4.3+T.galaxy2",
+      "errors": null,
+      "id": 15,
+      "input_connections": {
+        "input": {"id": 14, "output_name": "out_file1"}
+      },
+      "label": "SnpEff — Functional Annotation",
+      "outputs": [
+        {"label": "Annotated VCF",  "output_name": "snpeff_output"},
+        {"label": "Summary HTML",   "output_name": "statsFile"},
+        {"label": "Summary CSV",    "output_name": "csvFile"}
+      ],
+      "position": {"left": 2340, "top": 200},
+      "post_job_actions": {},
+      "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/snpeff/snpEff/4.3+T.galaxy2",
+      "tool_state": "{\"input\": null, \"genome_version\": \"Escherichia_coli_k_12\", \"intervals\": null, \"snpDb\": {\"genomeSrc\": \"named\", \"genome_version\": \"Escherichia_coli_k_12\"}, \"noLog\": true, \"filter\": {\"specificEffects\": \"no\"}, \"filterOut\": {\"filterOut_selector\": []}, \"output_options\": {\"outputConditional\": {\"outputFormat\": \"vcf\"}}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+      "tool_version": "4.3+T.galaxy2",
+      "type": "tool",
+      "uuid": "f8a9b0c1-d2e3-4567-fabc-678901234567",
+      "workflow_outputs": [
+        {"label": "annotated_vcf",  "output_name": "snpeff_output", "uuid": "a9b0c1d2-e3f4-5678-abcd-789012345678"},
+        {"label": "snpeff_summary", "output_name": "statsFile",     "uuid": "b0c1d2e3-f4a5-6789-bcde-890123456789"}
+      ]
+    }
+  },
+  "tags": ["bacterial-genomics", "SNP", "variant-calling", "antibiotic-resistance", "NGS", "Galaxy", "bioinformatics", "portfolio"],
+  "uuid": "12345678-90ab-cdef-1234-567890abcdef",
+  "version": 1
+}

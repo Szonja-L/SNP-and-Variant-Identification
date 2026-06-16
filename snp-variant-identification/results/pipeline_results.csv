@@ -1,0 +1,12 @@
+CHROM,POS,REF,ALT,QUAL,DP,AF,GENE,AA_CHANGE,EFFECT,FUNCTIONAL_CLASS,CLINICAL_NOTE,FILTER,VAF_PCT,DRUG_CLASS,MECHANISM,MIC_FOLD,IS_RESISTANCE
+NC_000913.3,2337074,G,A,998,52,0.981,gyrA,p.Asp87Asn (D87N),MISSENSE_VARIANT,NONSYNONYMOUS,Fluoroquinolone resistance; quinolone-resistance-determining region (QRDR),PASS,98.1,Fluoroquinolone,Altered target (DNA gyrase QRDR),32.0,True
+NC_000913.3,4185063,C,T,967,61,1.0,rpoB,p.Ser531Leu (S531L),MISSENSE_VARIANT,NONSYNONYMOUS,Rifampicin resistance; RNA polymerase beta-subunit hotspot,PASS,100.0,Rifampicin,Altered target (RNA polymerase β-subunit),256.0,True
+NC_000913.3,1623580,G,A,823,44,0.955,marR,p.Gly103Ser (G103S),MISSENSE_VARIANT,NONSYNONYMOUS,Activates marA/marB; upregulates AcrAB-TolC efflux pump (MDR),PASS,95.5,Multidrug (MarA-mediated),Regulatory derepression → AcrAB-TolC upregulation,8.0,True
+NC_000913.3,487404,A,G,791,58,0.966,acrA,p.Ile355Val (I355V),MISSENSE_VARIANT,NONSYNONYMOUS,Efflux pump component; may enhance MDR efflux capacity,PASS,96.6,Multidrug (efflux),Efflux pump structural change (MFP subunit),4.0,True
+NC_000913.3,3177140,T,C,612,39,0.923,tolC,p.Leu457Pro (L457P),MISSENSE_VARIANT,NONSYNONYMOUS,Outer-membrane channel of AcrAB-TolC; altered specificity,PASS,92.3,Multidrug (efflux),Altered outer-membrane channel specificity,6.0,True
+NC_000913.3,2337102,C,T,743,55,0.982,gyrA,p.Ala90Val (A90V),MISSENSE_VARIANT,NONSYNONYMOUS,Secondary QRDR mutation; synergistic fluoroquinolone resistance,PASS,98.2,Fluoroquinolone,Altered target (DNA gyrase QRDR),16.0,True
+NC_000913.3,892114,A,T,541,47,0.936,ompC,p.Lys163* (K163*),STOP_GAINED,NONSENSE,Truncation of OmpC porin; reduces outer-membrane permeability,PASS,93.6,Broad spectrum,Loss-of-function porin (reduced outer-membrane permeability),4.0,True
+NC_000913.3,1304018,G,C,489,43,0.907,dnaQ,p.Pro72Arg (P72R),MISSENSE_VARIANT,NONSYNONYMOUS,DNA polymerase III proofreading subunit; may increase mutation rate,PASS,90.7,N/A,N/A,,False
+NC_000913.3,251012,C,T,667,51,0.961,recA,p.Leu276Leu (L276L),SYNONYMOUS_VARIANT,SYNONYMOUS,Silent; recA codon wobble position,PASS,96.1,N/A,N/A,,False
+NC_000913.3,3892445,G,A,589,48,0.979,rpsL,p.Ala157Ala (A157A),SYNONYMOUS_VARIANT,SYNONYMOUS,Silent; 30S ribosomal protein S12,PASS,97.9,N/A,N/A,,False
+NC_000913.3,4038912,C,A,401,42,0.905,rpsA,5'UTR,5_PRIME_UTR_VARIANT,MODIFIER,5′-UTR of rpsA; ribosomal protein S1,PASS,90.5,N/A,N/A,,False

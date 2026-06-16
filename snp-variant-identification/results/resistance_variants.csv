@@ -1,0 +1,8 @@
+CHROM,POS,REF,ALT,QUAL,DP,AF,GENE,AA_CHANGE,EFFECT,FUNCTIONAL_CLASS,CLINICAL_NOTE,FILTER,VAF_PCT
+NC_000913.3,2337074,G,A,998,52,0.981,gyrA,p.Asp87Asn (D87N),MISSENSE_VARIANT,NONSYNONYMOUS,Fluoroquinolone resistance; quinolone-resistance-determining region (QRDR),PASS,98.1
+NC_000913.3,4185063,C,T,967,61,1.0,rpoB,p.Ser531Leu (S531L),MISSENSE_VARIANT,NONSYNONYMOUS,Rifampicin resistance; RNA polymerase beta-subunit hotspot,PASS,100.0
+NC_000913.3,1623580,G,A,823,44,0.955,marR,p.Gly103Ser (G103S),MISSENSE_VARIANT,NONSYNONYMOUS,Activates marA/marB; upregulates AcrAB-TolC efflux pump (MDR),PASS,95.5
+NC_000913.3,487404,A,G,791,58,0.966,acrA,p.Ile355Val (I355V),MISSENSE_VARIANT,NONSYNONYMOUS,Efflux pump component; may enhance MDR efflux capacity,PASS,96.6
+NC_000913.3,3177140,T,C,612,39,0.923,tolC,p.Leu457Pro (L457P),MISSENSE_VARIANT,NONSYNONYMOUS,Outer-membrane channel of AcrAB-TolC; altered specificity,PASS,92.3
+NC_000913.3,2337102,C,T,743,55,0.982,gyrA,p.Ala90Val (A90V),MISSENSE_VARIANT,NONSYNONYMOUS,Secondary QRDR mutation; synergistic fluoroquinolone resistance,PASS,98.2
+NC_000913.3,1304018,G,C,489,43,0.907,dnaQ,p.Pro72Arg (P72R),MISSENSE_VARIANT,NONSYNONYMOUS,DNA polymerase III proofreading subunit; may increase mutation rate,PASS,90.7

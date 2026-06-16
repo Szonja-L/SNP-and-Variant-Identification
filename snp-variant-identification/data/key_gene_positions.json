@@ -1,0 +1,22 @@
+{
+  "gyrA": {
+    "pos": 2337072,
+    "color": "#FF6B6B"
+  },
+  "rpoB": {
+    "pos": 4185061,
+    "color": "#4ECDC4"
+  },
+  "marR": {
+    "pos": 1623580,
+    "color": "#FFE66D"
+  },
+  "acrA": {
+    "pos": 487397,
+    "color": "#A8DADC"
+  },
+  "tolC": {
+    "pos": 3177130,
+    "color": "#C77DFF"
+  }
+}

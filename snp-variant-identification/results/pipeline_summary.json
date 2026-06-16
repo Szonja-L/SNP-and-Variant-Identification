@@ -1,0 +1,22 @@
+{
+  "run_timestamp": "2026-06-16 14:08:25",
+  "sample_id": "EC_UTI_2023_001",
+  "reference": "NC_000913.3 (E. coli K-12 MG1655, 4,641,652 bp)",
+  "total_variants": 11,
+  "nonsynonymous": 7,
+  "synonymous": 2,
+  "modifier": 1,
+  "nonsense": 1,
+  "resistance_variants": 7,
+  "resistance_genes": 6,
+  "drug_classes_affected": 5,
+  "mean_qual": 692.8,
+  "mean_depth": 49.1,
+  "mean_vaf": 0.954,
+  "mapping_rate_pct": 98.57,
+  "mean_coverage_x": 48.7,
+  "raw_reads": 3142088,
+  "trimmed_reads": 3056442,
+  "pct_q30_raw": 87.4,
+  "pct_q30_trimmed": 93.1
+}

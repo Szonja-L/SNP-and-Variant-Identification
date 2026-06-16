@@ -1,0 +1,17 @@
+{
+  "total_reads": 3056442,
+  "mapped_reads": 3012609,
+  "mapping_rate_pct": 98.57,
+  "properly_paired_pct": 97.21,
+  "singletons": 11482,
+  "mean_coverage_x": 48.7,
+  "median_coverage_x": 47.3,
+  "pct_genome_gt_0x": 99.87,
+  "pct_genome_gt_20x": 98.94,
+  "pct_genome_gt_50x": 44.12,
+  "insert_size_mean_bp": 372,
+  "insert_size_sd_bp": 48,
+  "bwa_mem_version": "0.7.17",
+  "samtools_version": "1.18",
+  "reference": "NC_000913.3 (E. coli K-12 MG1655, 4,641,652 bp)"
+}

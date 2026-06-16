@@ -1,0 +1,19 @@
+{
+  "sample_id": "EC_UTI_2023_001",
+  "sequencer": "Illumina NovaSeq 6000",
+  "read_length": 150,
+  "raw_total_reads": 3142088,
+  "raw_r1_reads": 1571044,
+  "raw_r2_reads": 1571044,
+  "raw_pct_q30": 87.4,
+  "raw_pct_gc": 50.7,
+  "raw_mean_quality": 35.8,
+  "trim_total_reads": 3056442,
+  "trim_surviving_pct": 97.3,
+  "trim_pct_q30": 93.1,
+  "trim_mean_quality": 37.2,
+  "adapters_removed_reads": 85646,
+  "low_quality_removed": 10221,
+  "trimmomatic_version": "0.39",
+  "fastqc_version": "0.12.1"
+}
